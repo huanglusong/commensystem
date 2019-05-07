@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/angular.js"></script>
+</head>
+<body ng-app="myapp">
+<div ng-controller="mycontroller">
+    <p>用户的id:{{user.id}}</p>
+    <p>用户的姓名:{{user.username}}</p>
+    <p>用户的密码:{{user.password}}</p>
+</div>
+
+
+<script>
+    var module = angular.module('myapp',[]);
+    module.controller('mycontroller',function ($scope,$http) {
+        $http({
+            method:'GET',
+            url: 'http://localhost:8080/user/find/1'
+        }).then(function successCallback(response) {
+            $scope.user = response.data;
+        }, function errorCallback(response) {
+            // 请求失败执行代码
+        });
+    })
+
+</script>
+
+</body>
+</html>
