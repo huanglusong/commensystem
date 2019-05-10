@@ -10,7 +10,16 @@ public class Saying {
     private String avatar;
     private String likes;
     private Date createTime;
+    private String title;
     private List<FirstLevelComment> flcs;
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getTitle() {
+        return title;
+    }
 
     public void setId(Integer id) {
         this.id = id;

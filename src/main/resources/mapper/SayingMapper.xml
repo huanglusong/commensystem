@@ -8,6 +8,7 @@
         <result column="author" property="author" jdbcType="VARCHAR"/>
         <result column="sayingAvatar" property="avatar" jdbcType="VARCHAR"/>
         <result column="likes" property="likes" jdbcType="VARCHAR"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
         <result column="createTime" property="createTime" jdbcType="TIMESTAMP"/>
         <collection property="flcs" ofType="firstLevelComment" column="sayingId">
             <id column="flc_id" property="id" jdbcType="INTEGER"/>

@@ -4,6 +4,7 @@ import hhdd.messagesystem.bean.User;
 
 public interface UserService {
 
-    User findOneById(int id);
+    User login(String username,String password);
+    boolean register(String username,String password);
 
 }

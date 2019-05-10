@@ -4,6 +4,7 @@ import hhdd.messagesystem.bean.FirstLevelComment;
 import hhdd.messagesystem.bean.Saying;
 import hhdd.messagesystem.mapper.SayingMapper;
 import hhdd.messagesystem.service.SayingService;
+import hhdd.messagesystem.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import java.util.List;
 public class Test1 {
     @Autowired
     private SayingMapper mapper;
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private SayingService service;
@@ -49,6 +52,10 @@ public class Test1 {
     public void testSayingService(){
         Saying saying = service.selectOneById(2);
         System.out.println(saying);
+    }
+    @Test
+    public void testRegister(){
+        userService.register("user1","123456");
     }
 
 }

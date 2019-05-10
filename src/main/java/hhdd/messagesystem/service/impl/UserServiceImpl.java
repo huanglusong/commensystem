@@ -12,8 +12,21 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserMapper mapper;
 
+
     @Override
-    public User findOneById(int id) {
-        return mapper.findOndeById(id);
+    public User login(String username, String password) {
+        return mapper.findOndeById(username,password);
+    }
+
+    @Override
+    public boolean register(String username, String password) {
+        try{
+            mapper.addUser(username,password);
+            return true;
+        }catch (Exception e){
+            System.out.println("注册失败！！");
+            return false;
+        }
+
     }
 }

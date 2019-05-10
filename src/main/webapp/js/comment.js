@@ -3,7 +3,7 @@ var app = angular.module('app', []);
 app.controller('mainController', ['$scope', 'httpService', function($scope, httpService) {
 
 	//模拟出一个已经登录的用户
-	var mockusers = [{
+	/*var mockusers = [{
 		"id" : "1",
 		"username" : "li",
 		"avatar" : "images/li.jpg"
@@ -25,10 +25,20 @@ app.controller('mainController', ['$scope', 'httpService', function($scope, http
 
 	window.localStorage.setItem("id", mockusers[currentUserIndex].id);
 	window.localStorage.setItem("username", mockusers[currentUserIndex].username);
-	window.localStorage.setItem("avatar", mockusers[currentUserIndex].avatar);
+	window.localStorage.setItem("avatar", mockusers[currentUserIndex].avatar);*/
 
 	$scope.isShowComment = false;
 
+	$scope.isShowLogin = false;
+
+	$scope.isShowError = false;
+
+	$scope.isShowRegister = false;
+
+	$scope.registerFlag = false;
+
+	$scope.registerError = false;
+	
 	$scope.cmt = {
 		fstlvlcmt : ""
 	}
@@ -37,10 +47,15 @@ app.controller('mainController', ['$scope', 'httpService', function($scope, http
 
 	//current user information
 	$scope.user = {
-		id : window.localStorage.getItem("id"),
-		username : window.localStorage.getItem("username"),
-		avatar : window.localStorage.getItem("avatar")
+		id : "",
+		username : "",
+		password : "",
+		avatar : "images/li.jpg"
 	}
+
+	$scope.registerUsername;
+	$scope.registerPassowrd;
+
 
 	httpService.get("http://localhost:8080/saying/get/comment/1", {}, function(data) {
 		$scope.saying = data;
@@ -79,6 +94,54 @@ app.controller('mainController', ['$scope', 'httpService', function($scope, http
 		$scope.isShowComment = ! $scope.isShowComment;
 	}
 
+	$scope.login = function(username,password){
+        var data = {
+            username : username,
+            password : password,
+        }
+        httpService.post("http://localhost:8080/user/login", data, function(data) {
+            //获取到时间和id
+			$scope.user.id = data.id;
+			$scope.user.username = data.username;
+             $scope.isShowLogin = data.status;
+             $scope.isShowError = !data.status;
+
+        }, function(error) {
+            console.log(error)
+        })
+        //shakeModal();
+    }
+
+    $scope.myregister = function(username,password){
+		var data = {
+			username : username,
+			password : password,
+		}
+		httpService.post("http://localhost:8080/user/register", data, function(data) {
+			//获取到时间和id
+			$scope.registerFlag = data;
+			$scope.isShowRegister = !data;
+			$scope.registerError = !data;
+
+		}, function(error) {
+			console.log(error)
+		})
+	}
+    $scope.nologin = function(){
+		$scope.user.username = "匿名";
+		$scope.isShowLogin = true;
+		$scope.isShowError = false;
+	}
+	$scope.logout = function(){
+		$scope.user.username = "";
+		$scope.user.id = "";
+		$scope.user.password = "";
+		$scope.isShowLogin = false;
+	}
+	$scope.showRegisterBox = function(){
+		$scope.isShowRegister = !$scope.isShowRegister;
+
+	}
 	$scope.firstComment = function(sayingId) {
 
 		if ($scope.cmt.fstlvlcmt == "") {

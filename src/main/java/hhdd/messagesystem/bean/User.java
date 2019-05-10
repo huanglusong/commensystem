@@ -4,6 +4,16 @@ public class User {
     private int id;
     private String username;
     private String password;
+    //登录状态
+    private boolean status;
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
 
     public void setId(int id) {
         this.id = id;
